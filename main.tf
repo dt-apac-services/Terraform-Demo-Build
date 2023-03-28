@@ -64,6 +64,12 @@ resource "google_compute_instance" "vm_instance" {
     sudo systemctl daemon-reload;
     sudo systemctl start easytravel.service;
     EOT
+  scheduling {
+    instance_termination_action = "DELETE"
+    max_run_duration {
+      seconds = 3600
+    }
+  }
   metadata = {
     enable-oslogin = "TRUE"
   }
