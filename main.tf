@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/google-beta"
       version = "4.57.0"
     }
+    random = {
+      source = "hashicorp/random"
+      version = "3.4.3"
+    }
   }
 }
 
@@ -13,8 +17,13 @@ provider "google" {
   zone        = "australia-southeast1-a"
 }
 
+resource "random_integer" "priority" {
+  min = 1
+  max = 50000
+}
+
 resource "google_compute_instance" "vm_instance" {
-  name = "terraform-instance"
+  name = "terraform-instance-${random_integer.priority.id}"
   machine_type = "e2-medium" #This sets the specifications of the VM Instance
   allow_stopping_for_update = true #This allows Terraform to tear down the instance for updates if needed
   
