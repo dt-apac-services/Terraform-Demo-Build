@@ -61,6 +61,7 @@ resource "google_compute_instance" "vm_instance" {
     java -jar easyTravel.jar -y;
     echo "passed easy install";
     printf "[Unit]\nDescription=easytravel\n[Service]\nUser=root\nWorkingDirectory=/root\nExecStart=/bin/bash /easytravel-2.0.0-x64/runEasyTravelNoGUI.sh\nRestart=always\n[Install]\nWantedBy=multi-user.target" >> '/etc/systemd/system/easytravel.service';
+    sed -i 's/^config.bootPlugins=NamedPipeNativeApplication,NamedPipeNativeApplication.NET,DummyPaymentService,DatabaseCleanup,UseFinanceServiceWCF.NET,BizEventsPlugin/config.bootPlugins=NamedPipeNativeApplication,NamedPipeNativeApplication.NET,DummyPaymentService,DatabaseCleanup,UseFinanceServiceWCF.NET,BizEventsPlugin,CreditCardCheckError500/' /easytravel-2.0.0-x64/resources/easyTravelConfig.properties;
     sudo systemctl daemon-reload;
     sudo systemctl start easytravel.service;
     EOT
@@ -74,3 +75,16 @@ resource "google_compute_instance" "vm_instance" {
     enable-oslogin = "TRUE"
   }
 }
+
+resource "google_compute_firewall" "rules" {
+  project     = "dxs-apac"
+  name        = "easytravel-rule-${random_integer.priority.id}"
+  network     = "default"
+  description = "Allows for comms to easytravel default ports"
+
+  allow {
+    protocol  = "tcp"
+    ports     = ["8091", "7654", "8079", "8999", "9079", "80", "443", "3306", "8080", "8094"]
+  }
+
+  source_ranges = [google_compute_instance.vm_instance.network_interface.0.access_config.0.nat_ip]
