@@ -60,6 +60,7 @@ resource "google_compute_instance" "vm_instance" {
     wget "$ET_URL" -O "$ET_TAR";
     java -jar easyTravel.jar -y;
     echo "passed easy install";
+    sed -i 's/^config.bootPlugins=NamedPipeNativeApplication,NamedPipeNativeApplication.NET,DummyPaymentService,DatabaseCleanup,UseFinanceServiceWCF.NET,BizEventsPlugin/config.bootPlugins=NamedPipeNativeApplication,NamedPipeNativeApplication.NET,DummyPaymentService,DatabaseCleanup,UseFinanceServiceWCF.NET,BizEventsPlugin,CreditCardCheckError500/' /easytravel-2.0.0-x64/resources/easyTravelConfig.properties;
     printf "[Unit]\nDescription=easytravel\n[Service]\nUser=root\nWorkingDirectory=/root\nExecStart=/bin/bash /easytravel-2.0.0-x64/runEasyTravelNoGUI.sh\nRestart=always\n[Install]\nWantedBy=multi-user.target" >> '/etc/systemd/system/easytravel.service';
     sudo systemctl daemon-reload;
     sudo systemctl start easytravel.service;
