@@ -67,7 +67,7 @@ resource "google_compute_instance" "vm_instance" {
   scheduling {
     instance_termination_action = "DELETE"
     max_run_duration {
-      seconds = 3600
+      seconds = 7200
     }
   }
   metadata = {
