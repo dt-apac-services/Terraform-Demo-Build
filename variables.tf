@@ -15,7 +15,7 @@ variable "dt_tenant_url" {
   description = "This is the url of your Dynatrace tenancy. Example: https://xzv52984.live.dynatrace.com"
 }
 
-variable "dt_token" {
+variable "dt_paas_token" {
   type = string
   description = "This is the Dynatrace PAAS Token used to download the agent file"
   sensitive = true
