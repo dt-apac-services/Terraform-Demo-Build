@@ -1,22 +1,3 @@
-terraform {
-  required_providers {
-    google = {
-      source  = "hashicorp/google-beta"
-      version = "4.57.0"
-    }
-    random = {
-      source = "hashicorp/random"
-      version = "3.4.3"
-    }
-  }
-}
-
-provider "google" {
-  project     = "dxs-apac"
-  region      = "australia-southeast1"
-  zone        = "australia-southeast1-a"
-}
-
 resource "random_integer" "priority" {
   min = 1
   max = 50000
@@ -39,10 +20,6 @@ resource "google_compute_instance" "vm_instance" {
     }
   }
    
-  # service_account{
-  #   email = "604381141592-compute@developer.gserviceaccount.com"
-	# scopes = ["cloud-platform"]
-  # }
   metadata_startup_script = <<-EOT
     curl -X GET "https://${var.dt_tenant}.live.dynatrace.com/api/v1/deployment/installer/agent/unix/default/latest?flavor=default&arch=all&bitness=all&skipMetadata=false&networkZone=default" -H "accept: */*" -H "Authorization: Api-Token ${var.dt_token}" > /var/tmp/dynatrace-install.sh;
     chmod 755 /var/tmp/dynatrace-install.sh;
