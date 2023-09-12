@@ -21,7 +21,7 @@ resource "google_compute_instance" "vm_instance" {
   }
    
   metadata_startup_script = <<-EOT
-    curl -X GET "https://${var.dt_tenant_url}/api/v1/deployment/installer/agent/unix/default/latest?flavor=default&arch=all&bitness=all&skipMetadata=false&networkZone=default" -H "accept: */*" -H "Authorization: Api-Token ${var.dt_paas_token}" > /var/tmp/dynatrace-install.sh;
+    curl -X GET "${var.dt_tenant_url}/api/v1/deployment/installer/agent/unix/default/latest?flavor=default&arch=all&bitness=all&skipMetadata=false&networkZone=default" -H "accept: */*" -H "Authorization: Api-Token ${var.dt_paas_token}" > /var/tmp/dynatrace-install.sh;
     chmod 755 /var/tmp/dynatrace-install.sh;
     sudo ./bin/sh /var/tmp/dynatrace-install.sh ${var.oneagent_args};
     echo "installed agent";
