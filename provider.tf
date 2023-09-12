@@ -12,7 +12,7 @@ terraform {
 }
 
 provider "google" {
-  project     = "dxs-apac"
-  region      = "australia-southeast1"
-  zone        = "australia-southeast1-a"
+  project     = var.project
+  region      = var.region
+  zone        = var.zone
 }
