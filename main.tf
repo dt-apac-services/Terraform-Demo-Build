@@ -33,10 +33,12 @@ resource "google_compute_instance" "vm_instance" {
     sudo systemctl daemon-reload;
     sudo systemctl start easytravel.service;
     EOT
+
+  # The instance will be Deleted after 8 hours to prevent instances being left running  
   scheduling {
     instance_termination_action = "DELETE"
     max_run_duration {
-      seconds = 7200
+      seconds = 28800
     }
   }
   metadata = {
