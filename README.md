@@ -27,7 +27,7 @@ This Repository once implemented using 'Terraform Apply' will spin up a gcp e2.m
 ```git
 git clone https://github.com/dt-apac-services/Terraform-Demo-Build.git
 ```
-2. Change directory to the project
+2. Change directory to the project path
 ```
 cd <your-path>\Terraform-Demo-Build
 ```
@@ -52,8 +52,8 @@ $env:TF_VAR_dt_paas_token = "dtxx.xxxx.xxxxx"
     ```
 
 > IMPORTANT NOTES: 
-- Make sure to delete the PaaS token after the VM is created. The PaaS token will be shown in plain text in VM details. Security of PaaS token is a planned future enhancement.
-- VM will automatically shutdown after 8 hours. This is to prevent machines left running in the cloud.
+> - Make sure to delete the PaaS token after the VM is created. The PaaS token will be shown in plain text in VM details. Security of PaaS token is a planned future enhancement.
+> - VM will automatically shutdown after 8 hours. This is to prevent machines left running in the cloud.
 
 ## Troubleshooting startup script
 
